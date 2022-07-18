@@ -1,0 +1,7 @@
+#ignora o virtual env do python
+.venv
+
+#diretorio de output do robot
+output
+
+.env

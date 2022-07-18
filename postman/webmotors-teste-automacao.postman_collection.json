@@ -1,0 +1,239 @@
+{
+	"info": {
+		"_postman_id": "a7402e88-f2a0-4e73-a6c6-637989c429be",
+		"name": "webmotors-teste-automacao",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Obtem Montadoras",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//valida as montadoras.\r",
+							"pm.test(\"Valid make\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    jsonData.forEach((make => {\r",
+							"        pm.expect(make.ID).to.not.undefined;\r",
+							"        pm.expect(make.Name).to.not.undefined;\r",
+							"    }));\r",
+							"\r",
+							"    //preenche variavel de ambiente com id da montadora para proximo teste.\r",
+							"    pm.globals.set(\"makeId\", jsonData[0].ID);    \r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://desafioonline.webmotors.com.br/api/OnlineChallenge/Make",
+					"protocol": "https",
+					"host": [
+						"desafioonline",
+						"webmotors",
+						"com",
+						"br"
+					],
+					"path": [
+						"api",
+						"OnlineChallenge",
+						"Make"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtem Modelos",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//valida os modelos.\r",
+							"pm.test(\"Valid model\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    jsonData.forEach((model => {\r",
+							"        pm.expect(model.ID).to.not.undefined;\r",
+							"        pm.expect(model.Name).to.not.undefined;\r",
+							"        pm.expect(model.MakeID).to.not.undefined;\r",
+							"    }));\r",
+							"\r",
+							"    //preenche variavel de ambiente com id do modelo para proximo teste.\r",
+							"    pm.globals.set(\"modelId\", jsonData[0].ID);    \r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://desafioonline.webmotors.com.br/api/OnlineChallenge/Model?MakeID={{makeId}}",
+					"protocol": "https",
+					"host": [
+						"desafioonline",
+						"webmotors",
+						"com",
+						"br"
+					],
+					"path": [
+						"api",
+						"OnlineChallenge",
+						"Model"
+					],
+					"query": [
+						{
+							"key": "MakeID",
+							"value": "{{makeId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtem Versões",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//valida as versões.\r",
+							"pm.test(\"Valid model\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    jsonData.forEach((version => {\r",
+							"        pm.expect(version.ID).to.not.undefined;\r",
+							"        pm.expect(version.Name).to.not.undefined;\r",
+							"        pm.expect(version.ModelID).to.not.undefined;\r",
+							"    }));\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://desafioonline.webmotors.com.br/api/OnlineChallenge/Version?ModelID={{modelId}}",
+					"protocol": "https",
+					"host": [
+						"desafioonline",
+						"webmotors",
+						"com",
+						"br"
+					],
+					"path": [
+						"api",
+						"OnlineChallenge",
+						"Version"
+					],
+					"query": [
+						{
+							"key": "ModelID",
+							"value": "{{modelId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtem Veiculos",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//valida as versões.\r",
+							"pm.test(\"Valid model\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    jsonData.forEach((vehicle => {\r",
+							"        pm.expect(vehicle.ID).to.not.undefined;\r",
+							"        pm.expect(vehicle.Make).to.not.undefined;\r",
+							"        pm.expect(vehicle.Model).to.not.undefined;\r",
+							"        pm.expect(vehicle.Version).to.not.undefined;\r",
+							"        pm.expect(vehicle.Image).to.not.undefined;\r",
+							"        pm.expect(vehicle.KM).to.not.NaN;\r",
+							"        pm.expect(vehicle.Price).to.not.undefined;\r",
+							"        pm.expect(vehicle.YearModel).to.not.NaN;\r",
+							"        pm.expect(vehicle.YearFab).to.not.NaN;\r",
+							"        pm.expect(vehicle.Color).to.not.undefined;\r",
+							"    }));\r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://desafioonline.webmotors.com.br/api/OnlineChallenge/Vehicles?Page=1",
+					"protocol": "https",
+					"host": [
+						"desafioonline",
+						"webmotors",
+						"com",
+						"br"
+					],
+					"path": [
+						"api",
+						"OnlineChallenge",
+						"Vehicles"
+					],
+					"query": [
+						{
+							"key": "Page",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"//valida status 200",
+					"pm.test(\"Status code is 200\", function () {",
+					"    pm.response.to.have.status(200);",
+					"});",
+					"",
+					"//valida tempo de resposta abaixo de 10000ms",
+					"pm.test(\"Response time is less than 10000ms\", function () {",
+					"    pm.expect(pm.response.responseTime).to.be.below(10000);",
+					"});"
+				]
+			}
+		}
+	]
+}
